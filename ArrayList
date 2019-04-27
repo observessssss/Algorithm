@@ -1,0 +1,237 @@
+package com.algorithm.cn;
+
+import java.io.ObjectInputStream.GetField;
+import java.util.SimpleTimeZone;
+
+import javax.lang.model.element.Element;
+
+public class Arraylist{
+	private int[] data;
+	private int size;
+
+	
+	
+//*******************************构造方法方法代码块************************************//
+	
+	//构造方法一：传参构造
+    public Arraylist(int capacity) {
+		// TODO Auto-generated constructor stub
+	    this.data=new int[capacity];
+	    this.size=0;
+		
+	}
+    
+    
+    //构造方法二：默认构造
+	 public Arraylist() {
+		// TODO Auto-generated constructor stub
+	    this(10);
+		//利用this关键字调用其他工作方法，默认为capacity为10；
+	}
+
+	  
+//*******************************构造方法方法代码块************************************//        	
+
+	 
+	 
+//*******************************普通成员方法代码块************************************//
+	 
+	
+	public int getSize() {
+		return size;
+	}
+	//返回当前的实际元素个数
+
+    public boolean isEmpty() {
+    	return size==0;
+	}
+    //返回当前实际顺序表是否为空
+    
+    
+    public void addLast(int e) {
+    	
+    	addInsert(size,e);
+    	
+    	/*if (size==data.length) 
+    	{
+    		throw new IllegalArgumentException("AddLast failed.Array is full.");
+		}
+    	data[size++]=e;
+    	*/
+	}
+    //新旧方法对比使用
+    //对数组的最后一位进行添加操作，讲元素加入数组
+    //如果数组满了，就抛出异常
+    
+    
+    
+    public void addFirst(int e) {
+    	addInsert(0, e);
+	}
+    //利用addInsert在构造一个addFirst
+    
+    
+    
+    public void addInsert(int index,int e ) {
+    	if (size==data.length) 
+    		throw new IllegalArgumentException("AddLast failed.Array is full.");
+		
+    	if (index < 0 || index > size) {
+    		throw new IllegalArgumentException("Index is illegal.");
+		}
+    	for (int i =size-1; i >= index; i--) {
+			data[i+1]=data[i];
+		}
+    	
+    	data[index]=e;
+    	
+    	size++;
+	}
+    //开始标准的判断一下数组是不是满的，而且index的合法性
+    //循操作进行对size-1的换位，并且覆盖
+    //插入元素。
+    //维护size的下标
+    
+    
+    
+    @Override
+    public String toString() {
+    	StringBuilder res=new StringBuilder();
+    	res.append(String.format("Array: size = %d,capacity= %d\n",size,data.length));
+    	res.append('[');
+    	for (int i = 0; i < size; i++) {
+    		res.append(data[i]);
+    		if (i!=size-1) {
+    			res.append(",");
+			}
+			
+		}
+    	res.append(']');
+    	
+		return res.toString();
+	}
+    //toString重些,描述这个数组
+    
+    
+    
+    public int get(int index) {
+
+    	if (index < 0 || index > size) {
+    		throw new IllegalArgumentException("Index is illegal.");
+		}
+    	return data[index];
+	}
+    //获取的index位置的数据
+    
+    
+    public void set(int index,int e) {
+    	if (index < 0 || index > size) {
+    		throw new IllegalArgumentException("Index is illegal.");
+		}
+    	data[index]=e;
+	}
+    //对index下标上的元素进行修改
+
+
+    public boolean contains(int e) {
+    	for (int i = 0; i < size; i++) {
+    		if (data[i]==e) 
+    			return true;
+    	}
+    		
+    	return false;
+	}
+    //判断一个元素e，是否存在
+    
+    
+    
+    
+    public int find(int e) {
+    	for (int i = 0; i < size; i++) {
+			if (data[i]==e) 
+				return i;
+			}
+    	         return -1;
+	}
+    //寻找一个特定元素的下标，有设计缺陷
+    
+    
+    
+    public int deleteIndex(int index){
+    	if (index < 0 || index > size) {
+    		throw new IllegalArgumentException("Index is illegal.");
+		}
+    	int ret=data[index];
+    	
+    	for (int i = index+1; i < size; i++) {
+			data[i-1]=data[i];
+		}
+
+    	size--;
+        return ret;		
+	}
+    //删除index的元素，并返回
+    
+    
+    
+    
+    public int deleteFirst(){
+    	return deleteIndex(0);
+	}
+    //删除第一个元素
+    
+    
+    
+    public int deleteLast() {
+    	return deleteIndex(size-1);
+	}
+    //删除最后一个元素
+    
+    
+    public void deleteElement(int e) {
+    	
+    	int index=find(e);
+    	if (index!=-1) {
+    		deleteIndex(index);	
+		}
+	}
+    //删除第一元素，从数组里，又设计缺陷
+    
+    
+    
+    
+    
+    
+    
+    public static void main(String[] args) {
+		Arraylist arr=new Arraylist(20);
+		for (int i = 0; i <10; i++) {
+			arr.addLast(i);
+		}
+	    System.out.println(arr);	
+	    
+		arr.deleteIndex(2);
+		System.out.println(arr);
+		
+		System.out.println(arr.contains(3));
+		
+		
+	
+		
+		
+	/*	System.out.println(arr);
+		
+		arr.addInsert(1, 100);
+		System.out.println(arr);
+		
+		arr.addFirst(-1);
+		System.out.println(arr);
+		*/
+	}
+    
+    
+    	
+
+
+
+}
