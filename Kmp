@@ -1,0 +1,74 @@
+
+public class Kmp {
+	public static int[] getNext(char[] p) {
+		
+		int[] next=new int[p.length];
+		next[0]=-1;
+		int j=0;
+		int k=-1;
+		while (j<p.length-1) {
+			if (k==-1 || p[k]==p[j]) {
+				
+				next[++j]=++k;
+			}
+			else {
+				k=next[k];
+			}
+			
+			
+		}
+		
+		
+		return next;
+	}
+	
+	
+	public static void kmpAl(char[] m,char[] p) {
+      int i=0;
+      int j=0;
+      int[] next=Kmp.getNext(p); 
+      
+      
+      
+      
+		while (i<m.length){
+			
+			if (j==-1 || m[i]==p[j]) {
+				++i;
+				++j;
+				
+			} else {
+				j=next[j];
+			}
+			
+			if (j==p.length){
+				System.out.println("find index  "+(i-j+1));
+				j=0;
+		}
+			
+		
+		
+		}	
+		
+	}
+	
+	
+	
+		public static void main(String[] args) {
+
+			String m="sssasbdsabdsadsssaababaa";
+			String p="ab";
+		
+		
+				Kmp.kmpAl(m.toCharArray(), p.toCharArray());
+					/*int[] next=Kmp.getNext(p.toCharArray()); 
+	   
+					for (int i = 0; i < next.length; i++) {
+					System.out.println(next[i]);
+			
+		}
+		*/
+		
+	}
+
+}
